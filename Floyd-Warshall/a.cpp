@@ -25,22 +25,22 @@ int main() {
     }
 
 
-    vv<vv<int>> dp(n+1, vvv<int>(n, vv<int>(n, vector<int>(2, 0))));
+    vvv<int> dp(n+1, vv<int>(n, vector<int>(n)));
 
     rep(i, n) {
         for(int j = i+1; j < n; j++) {
-            dp[0][i][j][0] = dp[0][j][i][0] = a[i][j];
-            dp[0][i][j][1] = dp[0][j][i][1] = b[i][j];
+            dp[i][j][0] = dp[j][i][0] = a[i][j];
+            dp[i][j][1] = dp[j][i][1] = b[i][j];
         }
     }
 
     for(int k = 0 ; k < n; k++) {
         rep(i, n) {
             rep(j, n) {
-                dp[k+1][i][j][0] = min(dp[k][i][j][0], dp[k][i][k][0] + dp[k][k][j][0]);
-                dp[k+1][i][j][1] = min(dp[k][i][j][1], min(
-                    dp[k][i][k][1] + dp[k][k][j][0],
-                    dp[k][i][k][0] + dp[k][k][j][1]
+                dp[i][j][0] = min(dp[i][j][0], dp[i][k][0] + dp[k][j][0]);
+                dp[i][j][1] = min(dp[i][j][1], min(
+                    dp[i][k][1] + dp[k][j][0],
+                    dp[i][k][0] + dp[k][j][1]
                 ));
             }
         }
@@ -48,6 +48,6 @@ int main() {
 
     rep(i, n) {
         for(int j = i+1 ; j < n ; j++)
-            cout << min(dp[n][i][j][0], dp[n][i][j][1]) << " \n"[j == n - 1];
+            cout << min(dp[i][j][0], dp[i][j][1]) << " \n"[j == n - 1];
     }
 }
