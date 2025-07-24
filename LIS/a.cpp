@@ -19,6 +19,7 @@ int main() {
         } else {
             *it = a[i];
         }
+        cout << "l_" << i+1 << ": " << it - dp.begin() + 1 << endl;
     }
 
     rep(i, dp.size()) {
